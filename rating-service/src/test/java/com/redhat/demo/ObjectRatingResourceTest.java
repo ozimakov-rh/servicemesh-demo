@@ -7,14 +7,14 @@ import static io.restassured.RestAssured.given;
 import static org.hamcrest.CoreMatchers.is;
 
 @QuarkusTest
-public class ReviewResourceTest {
+public class ObjectRatingResourceTest {
 
     @Test
-    public void testReviewEndpoint() {
+    public void testObjectRatingEndpoint() {
         given()
-                .when().get("/review")
-                .then()
-                .statusCode(200);
+          .when().get("/rating")
+          .then()
+             .statusCode(200);
     }
 
 }

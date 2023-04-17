@@ -12,6 +12,11 @@ public class ObjectRatingResource {
     InteractiveQueries interactiveQueries;
 
     @GET
+    public String rootEndpoint() {
+        return "Rating Service Endpoint";
+    }
+
+    @GET
     @Path("/{objectId}")
     public ObjectRating fetchObjectScore(@PathParam("objectId") long objectId) {
         var result = interactiveQueries.getObjectRating(objectId);

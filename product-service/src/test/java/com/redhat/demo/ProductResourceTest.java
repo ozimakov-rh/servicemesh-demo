@@ -10,12 +10,12 @@ import static org.hamcrest.CoreMatchers.is;
 public class ProductResourceTest {
 
     @Test
-    public void testHelloEndpoint() {
+    public void testProductDetails() {
         given()
-          .when().get("/hello")
+          .when().get("/product/1")
           .then()
              .statusCode(200)
-             .body(is("Hello from RESTEasy Reactive"));
+                .body("id", is(1));
     }
 
 }

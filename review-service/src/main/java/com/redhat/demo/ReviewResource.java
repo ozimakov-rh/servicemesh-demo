@@ -19,6 +19,11 @@ public class ReviewResource {
     ReviewScoreProducer scorePublisher;
 
     @GET
+    public String rootEndpoint() {
+        return "Review Service Endpoint";
+    }
+
+    @GET
     @Path("/object/{objectId}")
     public Multi<Review> fetchReviewsForObject(@PathParam("objectId") long objectId) {
         return Review.stream("objectId", Sort.descending("lastUpdated"), objectId);
