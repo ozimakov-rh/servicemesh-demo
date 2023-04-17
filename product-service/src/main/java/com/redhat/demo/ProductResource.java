@@ -3,6 +3,10 @@ package com.redhat.demo;
 import io.quarkus.hibernate.reactive.panache.Panache;
 import io.smallrye.mutiny.Multi;
 import io.smallrye.mutiny.Uni;
+import org.eclipse.microprofile.faulttolerance.CircuitBreaker;
+import org.eclipse.microprofile.faulttolerance.Fallback;
+import org.eclipse.microprofile.faulttolerance.Timeout;
+import org.eclipse.microprofile.rest.client.inject.RestClient;
 import org.jboss.resteasy.reactive.RestStreamElementType;
 
 import javax.inject.Inject;
@@ -16,6 +20,9 @@ public class ProductResource {
 
     @Inject
     ProductRepository productRepository;
+
+    @RestClient
+    RatingService ratingService;
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
@@ -36,14 +43,14 @@ public class ProductResource {
     public Uni<ProductDetails> fetchProductDetailsById(@PathParam("id") long id) {
         return productRepository.findById(id)
                 .onItem().ifNull().failWith(NotFoundException::new)
-                .map(entity -> new ProductDetails(entity.id, entity.name, entity.description, 0));
+                .flatMap(this::entityToProductDetails);
     }
 
     @POST
     public Uni<ProductDetails> createProduct(Product product) {
         return Panache.withTransaction(() ->
                 productRepository.persist(this.productToEntity(product))
-                        .map(this::entityToProductDetails)
+                        .flatMap(this::entityToProductDetails)
         );
     }
 
@@ -55,7 +62,7 @@ public class ProductResource {
                         .onItem().ifNull().failWith(NotFoundException::new)
                         .map(entity -> this.updateEntity(entity, product))
                         .flatMap(productRepository::persist)
-                        .map(this::entityToProductDetails)
+                        .flatMap(this::entityToProductDetails)
         );
     }
 
@@ -76,8 +83,10 @@ public class ProductResource {
         return new Product(entity.id, entity.name, entity.description);
     }
 
-    private ProductDetails entityToProductDetails(ProductEntity entity) {
-        return new ProductDetails(entity.id, entity.name, entity.description, 0);
+    private Uni<ProductDetails> entityToProductDetails(ProductEntity entity) {
+        return retrieveProductRating(entity.id)
+                .map(rating -> new ProductDetails(entity.id, entity.name, entity.description, rating != null ? rating.avg() : 0, rating != null ? rating.count() : 0)
+        );
     }
 
     private ProductEntity productToEntity(Product product) {
@@ -90,6 +99,17 @@ public class ProductResource {
         entity.name = product.name();
         entity.description = product.description();
         return entity;
+    }
+
+    @Timeout(value = 250)
+    @Fallback(fallbackMethod = "fallbackRating")
+    @CircuitBreaker
+    public Uni<ProductRating> retrieveProductRating(long productId) {
+        return ratingService.getProductRating(productId);
+    }
+
+    public Uni<ProductRating> fallbackRating(long productId) {
+        return Uni.createFrom().item(new ProductRating(productId, 0, 0));
     }
 
 
