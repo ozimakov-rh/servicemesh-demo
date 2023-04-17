@@ -1,0 +1,55 @@
+name: Verify
+
+on:
+  push:
+    branches:
+      - 'main'
+
+jobs:
+  test-product-service:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+          cache: 'maven'
+
+      - name: Build Product Service
+        run: |
+          cd ./product-service
+          ./mvnw -B test
+
+  test-review-service:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+          cache: 'maven'
+
+      - name: Build Review Service
+        run: |
+          cd ./review-service
+          ./mvnw -B test
+
+  test-rating-service:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+          cache: 'maven'
+
+      - name: Build Rating Service
+        run: |
+          cd ./rating-service
+          ./mvnw -B test
