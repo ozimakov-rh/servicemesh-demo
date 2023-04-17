@@ -1,0 +1,62 @@
+apiVersion: extensions.istio.io/v1alpha1
+kind: WasmPlugin
+metadata:
+  name: bookinfo
+spec:
+  url: oci://registry.redhat.io/3scale-amp2/3scale-auth-wasm-rhel8:0.0.3
+  imagePullSecret: 11009103-rosa-ozimakov-pull-secret
+  phase: AUTHZ
+  priority: 100
+  selector:
+    labels:
+      app: productpage
+  pluginConfig:
+    api: v1
+    system:
+      name: system
+      token: tds8Jn2m
+      upstream:
+        name: outbound|3000||system-provider.threescale.svc.cluster.local
+        url: http://system-provider.threescale.svc.cluster.local/
+        timeout: 5000
+    backend:
+      name: backend
+      upstream:
+        name: outbound|3000||backend-listener.threescale.svc.cluster.local
+        url: http://backend-listener.threescale.svc.cluster.local/
+        timeout: 5000
+      extensions:
+        - no_body
+    services:
+    - id: '3'
+      token: 55041358fb53397880ef9f73422c62a4498711b4299785df4409c7bbae9ff68f
+      authorities:
+      - "*"
+      mapping_rules:
+        - method: GET
+          pattern: /
+          usages:
+            - delta: 1
+              name: hits
+      credentials:
+        user_key:
+          - query_string:
+              keys:
+                - user_key
+          - header:
+              keys:
+                - user_key
+        app_id:
+          - query_string:
+              keys:
+                - app_id
+          - header:
+              keys:
+                - app_id
+        app_key:
+          - query_string:
+              keys:
+                - app_key
+          - header:
+              keys:
+                - app_key
