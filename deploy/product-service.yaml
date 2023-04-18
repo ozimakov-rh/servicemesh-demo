@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: product-service
+  name: product-service-v1
   annotations:
     argocd.argoproj.io/sync-wave: "3"
 spec:
@@ -9,14 +9,56 @@ spec:
   selector:
     matchLabels:
       app: product-service
+      version: v1
   template:
     metadata:
       labels:
         app: product-service
+        version: v1
     spec:
       containers:
-        - name: product-service
-          image: quay.io/rh_ee_ozimakov/product-service:0.2
+        - name: product-service-v1
+          image: quay.io/rh_ee_ozimakov/product-service:1.0
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8080
+          resources:
+            requests:
+              memory: "64Mi"
+              cpu: "50m"
+            limits:
+              memory: "256Mi"
+              cpu: "250m"
+          livenessProbe:
+            httpGet:
+              path: /q/health/live
+              port: 8080
+          readinessProbe:
+            httpGet:
+              path: /q/health/ready
+              port: 8080
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: product-service-v2
+  annotations:
+    argocd.argoproj.io/sync-wave: "3"
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: product-service
+      version: v2
+  template:
+    metadata:
+      labels:
+        app: product-service
+        version: v2
+    spec:
+      containers:
+        - name: product-service-v2
+          image: quay.io/rh_ee_ozimakov/product-service:2.0
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 8080

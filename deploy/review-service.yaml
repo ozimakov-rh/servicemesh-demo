@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: review-service
-          image: quay.io/rh_ee_ozimakov/review-service:0.2
+          image: quay.io/rh_ee_ozimakov/review-service:2.0
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 8080
