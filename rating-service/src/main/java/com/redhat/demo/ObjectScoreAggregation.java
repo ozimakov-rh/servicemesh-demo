@@ -21,7 +21,7 @@ public class ObjectScoreAggregation {
         max = Math.max(max, event.score());
         sum += event.score();
         count++;
-        avg = BigDecimal.valueOf(sum / count).setScale(1, RoundingMode.HALF_UP).doubleValue();
+        avg = BigDecimal.valueOf(sum / count).setScale(3, RoundingMode.HALF_UP).doubleValue();
         return this;
     }
 
