@@ -1,7 +1,10 @@
 package com.redhat.demo;
 
+import io.quarkus.runtime.annotations.RegisterForReflection;
+
 import java.util.Optional;
 
+@RegisterForReflection
 public class GetObjectRatingResult {
 
     private static GetObjectRatingResult NOT_FOUND = new GetObjectRatingResult(null);
