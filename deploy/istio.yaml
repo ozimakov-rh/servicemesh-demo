@@ -29,7 +29,7 @@ spec:
   http:
     - match:
         - uri:
-            prefix: /v1/product
+            prefix: /api/product
       rewrite:
         uri: /product
       route:
@@ -43,7 +43,7 @@ spec:
           weight: 25
     - match:
         - uri:
-            prefix: /v1/review
+            prefix: /api/review
       rewrite:
         uri: /review
       route:
