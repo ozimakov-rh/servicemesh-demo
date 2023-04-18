@@ -85,7 +85,7 @@ public class ProductResource {
 
     private Uni<ProductDetails> entityToProductDetails(ProductEntity entity) {
         return retrieveProductRating(entity.id)
-                .map(rating -> new ProductDetails(entity.id, entity.name, entity.description, rating != null ? rating.avg() : 0, rating != null ? rating.count() : 0)
+                .map(rating -> new ProductDetails(entity.id, entity.name, entity.description, rating != null ? (int)Math.round(rating.avg()) : 0, rating != null ? rating.count() : 0)
         );
     }
 
