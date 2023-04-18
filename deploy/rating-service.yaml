@@ -46,6 +46,8 @@ metadata:
   name: rating-service
   labels:
     app: rating-service
+  annotations:
+    argocd.argoproj.io/sync-wave: "3"
 spec:
   ports:
     - protocol: TCP

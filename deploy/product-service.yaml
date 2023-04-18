@@ -46,6 +46,8 @@ metadata:
   name: product-service
   labels:
     app: product-service
+  annotations:
+    argocd.argoproj.io/sync-wave: "3"
 spec:
   ports:
     - protocol: TCP

@@ -46,6 +46,8 @@ metadata:
   name: review-service
   labels:
     app: review-service
+  annotations:
+    argocd.argoproj.io/sync-wave: "3"
 spec:
   ports:
     - protocol: TCP
