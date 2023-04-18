@@ -9,7 +9,7 @@ spec:
  location: MESH_EXTERNAL
  ports:
    - name: http
-     number: 3000
+     number: 80
      protocol: HTTP
  resolution: DNS
 ---
@@ -23,6 +23,6 @@ spec:
  location: MESH_EXTERNAL
  ports:
   - name: http
-    number: 3000
+    number: 80
     protocol: HTTP
  resolution: DNS
