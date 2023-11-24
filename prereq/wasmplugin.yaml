@@ -1,7 +1,7 @@
 apiVersion: extensions.istio.io/v1alpha1
 kind: WasmPlugin
 metadata:
-  name: servicemesh-demo
+  name: microservices-demo
 spec:
   url: oci://registry.redhat.io/3scale-amp2/3scale-auth-wasm-rhel8:0.0.3
   imagePullSecret: redhat-registry-pull-secret
@@ -9,12 +9,12 @@ spec:
   priority: 100
   selector:
     labels:
-      solution: servicemesh-demo
+      app: product-service
   pluginConfig:
     api: v1
     system:
       name: system
-      token: tds8Jn2m
+      token: yhwKBBEQi4eFl0bn
       upstream:
         name: outbound|80||system-provider.threescale.svc.cluster.local
         url: http://system-provider.threescale.svc.cluster.local/
@@ -28,8 +28,8 @@ spec:
       extensions:
         - no_body
     services:
-    - id: '3'
-      token: 55041358fb53397880ef9f73422c62a4498711b4299785df4409c7bbae9ff68f
+    - id: '6'
+      token: ba7d6d36737107399115e44925abd85c3573c3befbb6255a852753182c7cfe17
       authorities:
       - "*"
       mapping_rules:

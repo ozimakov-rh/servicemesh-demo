@@ -3,7 +3,7 @@ create sequence hibernate_sequence start 1 increment 1;
 create table review (
         id int8 not null,
         author varchar(255),
-        created timestamp,
+        lastUpdated timestamp,
         objectId int8 not null,
         score int4 not null,
         text varchar(255),

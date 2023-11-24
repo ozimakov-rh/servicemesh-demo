@@ -1,0 +1,35 @@
+kind: ServiceMeshControlPlane
+apiVersion: maistra.io/v2
+metadata:
+  name: basic
+  namespace: istio-system
+spec:
+  version: v2.3
+  tracing:
+    type: Jaeger
+    sampling: 10000
+  policy:
+    type: Istiod
+  telemetry:
+    type: Istiod
+  addons:
+    jaeger:
+      install:
+        storage:
+          type: Memory
+    prometheus:
+      enabled: true
+    kiali:
+      enabled: true
+    grafana:
+      enabled: true
+  security:
+    identity:
+      type: ThirdParty
+      thirdParty:
+        audience: istio-ca
+  techPreview:
+    meshConfig:
+      defaultConfig:
+        proxyMetadata:
+          ISTIO_META_DNS_CAPTURE: "false"

@@ -13,7 +13,7 @@ spec:
   template:
     metadata:
       labels:
-        solution: servicemesh-demo
+        solution: microservices-demo
         app: product-service
         version: v1
       annotations:
@@ -56,7 +56,7 @@ spec:
   template:
     metadata:
       labels:
-        solution: servicemesh-demo
+        solution: microservices-demo
         app: product-service
         version: v2
       annotations:
@@ -89,7 +89,7 @@ kind: Service
 metadata:
   name: product-service
   labels:
-    solution: servicemesh-demo
+    solution: microservices-demo
     app: product-service
   annotations:
     argocd.argoproj.io/sync-wave: "3"
