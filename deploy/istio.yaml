@@ -36,11 +36,11 @@ spec:
         - destination:
             host: product-service
             subset: v1
-          weight: 75
+          weight: 100
         - destination:
             host: product-service
             subset: v2
-          weight: 25
+          weight: 0
     - match:
         - uri:
             prefix: /api/review
