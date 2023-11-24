@@ -12,9 +12,9 @@
 
 ## Prepare a namespace
 ```
-oc new-project microservices-demo
-oc label namespace microservices-demo argocd.argoproj.io/managed-by=openshift-gitops
-oc adm policy add-role-to-user admin system:serviceaccount:openshift-gitops:openshift-gitops-argocd-application-controller -n microservices-demo
+oc new-project servicemesh-demo
+oc label namespace servicemesh-demo argocd.argoproj.io/managed-by=openshift-gitops
+oc adm policy add-role-to-user admin system:serviceaccount:openshift-gitops:openshift-gitops-argocd-application-controller -n servicemesh-demo
 ```
 
 ## Deploy with GitOps

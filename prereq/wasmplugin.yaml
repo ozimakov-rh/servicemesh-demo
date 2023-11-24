@@ -1,7 +1,7 @@
 apiVersion: extensions.istio.io/v1alpha1
 kind: WasmPlugin
 metadata:
-  name: microservices-demo
+  name: servicemesh-demo
 spec:
   url: oci://registry.redhat.io/3scale-amp2/3scale-auth-wasm-rhel8:0.0.3
   imagePullSecret: redhat-registry-pull-secret

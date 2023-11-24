@@ -12,7 +12,7 @@ spec:
   template:
     metadata:
       labels:
-        solution: microservices-demo
+        solution: servicemesh-demo
         app: review-service
       annotations:
         sidecar.istio.io/inject: "true"
@@ -44,7 +44,7 @@ kind: Service
 metadata:
   name: review-service
   labels:
-    solution: microservices-demo
+    solution: servicemesh-demo
     app: review-service
   annotations:
     argocd.argoproj.io/sync-wave: "3"

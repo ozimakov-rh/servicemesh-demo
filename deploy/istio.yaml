@@ -1,7 +1,7 @@
 apiVersion: networking.istio.io/v1alpha3
 kind: Gateway
 metadata:
-  name: microservices-demo-gateway
+  name: servicemesh-demo-gateway
   annotations:
     argocd.argoproj.io/sync-wave: "3"
 spec:
@@ -18,14 +18,14 @@ spec:
 apiVersion: networking.istio.io/v1alpha3
 kind: VirtualService
 metadata:
-  name: microservices-demo
+  name: servicemesh-demo
   annotations:
     argocd.argoproj.io/sync-wave: "3"
 spec:
   hosts:
     - "*"
   gateways:
-    - microservices-demo-gateway
+    - servicemesh-demo-gateway
   http:
     - match:
         - uri:
